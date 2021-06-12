@@ -4,6 +4,10 @@ import xml.etree.ElementTree as ET
 This script will add protons and fix mother idx of hard process particles
 '''
 
+#Global variables
+BEAMENERGY  = 6500.0        # beam energy [GeV]
+PROTON_MASS = 0.93827       # proton mass [GeV]
+
 if (len(sys.argv) < 2):
     print('ERROR: missing input file\nUsage: python '+sys.argv[0]+' LHEFILE')
     sys.exit(0)
@@ -14,8 +18,8 @@ if not os.path.exists(inFile):
   print('Cannot find'+inFile)
   sys.exit(0)
 
-pp = ['     2212   -1    0    0    0    0   0.00000000E+00   0.00000000E+00   6.50000000E+04   6.50000000E+04   0.93827000E+00 0. 9.',
-     '     2212   -1    0    0    0    0   0.00000000E+00   0.00000000E+00  -6.50000000E+04   6.50000000E+04   0.93827000E+00 0. 9.']
+pp = ['     2212   -1    0    0    0    0   %0.8e   %0.8e   %0.8e   %0.8e   %0.8e 0. 9.'%(0.,0.,BEAMENERGY,BEAMENERGY,PROTON_MASS),
+     '     2212   -1    0    0    0    0   %0.8e   %0.8e  -%0.8e   %0.8e   %0.8e 0. 9.'%(0.,0.,BEAMENERGY,BEAMENERGY,PROTON_MASS)]
 # read lhe file
 tree = ET.parse(inFile)
 root=tree.getroot()
